@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('quiz/history');
     })->name('quiz.history');
     
-    // API endpoints
+    // API endpoints (excluded from CSRF in VerifyCsrfToken middleware)
     Route::post('api/quiz/sessions', [App\Http\Controllers\QuizSessionController::class, 'store'])->name('api.quiz.sessions.store');
     Route::patch('api/quiz/sessions/{session}', [App\Http\Controllers\QuizSessionController::class, 'update'])->name('api.quiz.sessions.update');
     Route::get('api/quiz/sessions/active', [App\Http\Controllers\QuizSessionController::class, 'show'])->name('api.quiz.sessions.active');

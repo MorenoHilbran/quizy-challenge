@@ -5,6 +5,14 @@ import { createRoot } from 'react-dom/client';
 import '../css/app.css';
 import { initializeTheme } from './hooks/use-appearance';
 import { QuizProvider } from './contexts/QuizContext';
+import axios from 'axios';
+
+// Configure axios to send CSRF token with all requests
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+const token = document.head.querySelector('meta[name="csrf-token"]');
+if (token) {
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = (token as HTMLMetaElement).content;
+}
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

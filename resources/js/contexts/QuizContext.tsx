@@ -89,8 +89,11 @@ export function QuizProvider({ children }: { children: React.ReactNode }) {
             // Create quiz session on server
             const response = await fetch('/api/quiz/sessions', {
                 method: 'POST',
+                credentials: 'same-origin',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
                 },
                 body: JSON.stringify({
@@ -207,8 +210,11 @@ export function QuizProvider({ children }: { children: React.ReactNode }) {
             // Submit to server
             const response = await fetch(`/api/quiz/sessions/${quizState.sessionId}/complete`, {
                 method: 'POST',
+                credentials: 'same-origin',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
                 },
                 body: JSON.stringify({
