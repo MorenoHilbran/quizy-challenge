@@ -26,34 +26,6 @@ class QuizResult extends Model
         'time_taken_seconds' => 'integer',
     ];
 
-    protected $appends = [
-        'totalQuestions',
-        'correctAnswers',
-        'incorrectAnswers',
-        'timeTaken',
-    ];
-
-    // Accessors for camelCase
-    public function getTotalQuestionsAttribute()
-    {
-        return $this->total_questions;
-    }
-
-    public function getCorrectAnswersAttribute()
-    {
-        return $this->correct_answers;
-    }
-
-    public function getIncorrectAnswersAttribute()
-    {
-        return $this->incorrect_answers;
-    }
-
-    public function getTimeTakenAttribute()
-    {
-        return $this->time_taken_seconds;
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -62,5 +34,22 @@ class QuizResult extends Model
     public function session()
     {
         return $this->belongsTo(QuizSession::class, 'quiz_session_id');
+    }
+
+    /**
+     * Prepare the model for JSON serialization.
+     */
+    public function toArray()
+    {
+        $array = parent::toArray();
+        
+        // Add camelCase versions for frontend
+        $array['totalQuestions'] = $this->total_questions;
+        $array['correctAnswers'] = $this->correct_answers;
+        $array['incorrectAnswers'] = $this->incorrect_answers;
+        $array['timeTaken'] = $this->time_taken_seconds;
+        $array['createdAt'] = $this->created_at;
+        
+        return $array;
     }
 }
